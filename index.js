@@ -41,7 +41,7 @@ app.get('/api/visitors',(req,res)=>{
     res.send(database);
 })
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) {
     res.redirect('/location');
 });
 
