@@ -21,6 +21,18 @@
             #title{
                 font-weight: bold;
             }
+
+            h2{
+                color:blue;
+                width:300px;
+
+            }
+
+            h2:hover{
+                cursor: pointer;
+                font-weight: bold;
+                text-decoration: underline;
+            }
         </style>
     </head>
     <body>
@@ -28,8 +40,12 @@
         <div id="map"></div>
         <h1>The cities our visitors came from:</h1>
         <br>
-        <div class="list" style="max-height: 300px; overflow: auto;">
-        </div>
+        <div class="list" style="max-height: 300px; overflow: auto;"></div>
+        <hr>
+        <br>
+        <h1>Api Access</h1>
+        <a href="http://localhost:5000/location/api/ip"><p>http://localhost:5000/location/api/ip</a> - To retrieve your IP information</p>
+        <a href="http://localhost:5000/api/visitors"><p>http://localhost:5000/api/visitors</a> - To retrieve a list of visitors information</p>
         <script>
             fetch('/location/api/ip')
             .then(response=>{return response.json()})
@@ -37,7 +53,7 @@
                 const $title = document.getElementById("title");
                 $title.innerText = `You are visiting from ${body.city}, ${body.state}, ${body.country}`;
 
-                let map = L.map('map').setView([body.latitude,body.longitude],15)
+                map = L.map('map').setView([body.latitude,body.longitude],15)
                 const marker = L.marker([0,0]).addTo(map);                        
                 marker.setLatLng([body.latitude,body.longitude])
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -59,7 +75,10 @@
                         latitude: splitProp[0],
                         longitude: splitProp[1],
                     },function(result) {
-                        const visitorAddress = document.createElement('h1');
+                        const visitorAddress = document.createElement('h2');
+                        visitorAddress.addEventListener('click',()=>{
+                            map.panTo([result.latitude, result.longitude]);
+                        })
                         visitorAddress.innerText = `${result.city}, ${result.countryName}`
                         $visitorList.appendChild(visitorAddress);
                     });

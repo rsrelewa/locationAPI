@@ -31,11 +31,18 @@ const latlong = navigator.geolocation.getCurrentPosition((success, error) => {
 
 app.get('/location',(req,res)=>{
     res.sendFile(path.join(__dirname, '../geolocation/public', 'index.html'))
-    console.log(database)
 })
 
 app.put('/location/',(req,res)=>{
     res.send(database)
 })
+
+app.get('/api/visitors',(req,res)=>{
+    res.send(database);
+})
+
+app.get('/', function(req, res) {
+    res.redirect('/location');
+});
 
 app.listen(PORT,() => console.log(`Listening at http://localhost:${PORT}`))
