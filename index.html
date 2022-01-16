@@ -44,8 +44,8 @@
         <hr>
         <br>
         <h1>Api Access</h1>
-        <a href="http://localhost:5000/location/api/ip"><p>http://localhost:5000/location/api/ip</a> - To retrieve your IP information</p>
-        <a href="http://localhost:5000/api/visitors"><p>http://localhost:5000/api/visitors</a> - To retrieve a list of visitors information</p>
+        <a href="/location/api/ip"><p>/location/api/ip</a> - To retrieve your IP information</p>
+        <a href="/api/visitors"><p>/api/visitors</a> - To retrieve a list of visitors information</p>
         <script>
             fetch('/location/api/ip')
             .then(response=>{return response.json()})
