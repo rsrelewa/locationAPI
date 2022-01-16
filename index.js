@@ -30,8 +30,9 @@ const latlong = navigator.geolocation.getCurrentPosition((success, error) => {
 });
 
 app.get('/location',(req,res)=>{
-    res.sendFile(path.join(__dirname, '../geolocation/public', 'index.html'))
+    res.sendFile('/index.html' , { root : __dirname});
 })
+
 
 app.put('/location/',(req,res)=>{
     res.send(database)
@@ -41,7 +42,7 @@ app.get('/api/visitors',(req,res)=>{
     res.send(database);
 })
 
-app.get('/', (req, res) {
+app.get('/', (req, res) =>{
     res.redirect('/location');
 });
 
