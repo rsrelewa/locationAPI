@@ -1,6 +1,6 @@
 {
   "name": "geolocation",
-  "homepage" : "https://rsrelewa.github.io/locationAPI/",
+  "homepage": "https://rsrelewa.github.io/locationAPI/",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.1",
     "express": "^4.17.2",
     "node-geocoder": "^3.28.0",
     "node-navigator": "^1.0.1",

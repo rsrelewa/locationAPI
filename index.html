@@ -47,7 +47,45 @@
         <a href="/location/api/ip"><p>/location/api/ip</a> - To retrieve your IP information</p>
         <a href="/api/visitors"><p>/api/visitors</a> - To retrieve a list of visitors information</p>
         <script>
-            fetch('/location/api/ip')
+            
+            function success(pos) {
+                const crd = pos.coords;
+                return crd;
+            }
+
+            function error(err) {
+                console.warn(`ERROR(${err.code}): ${err.message}`);
+            }
+
+            navigator.geolocation.getCurrentPosition((success, error) => {
+                const coords = success.coords;
+                const body = {latitude:coords.latitude,longitude:coords.longitude}
+                fetch('/location', {
+                method:'POST',
+                body:JSON.stringify(body),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+                }).then(response=>{return response.json()})
+                .then(body=>{
+                    const locationObject = body[0]
+                    const $title = document.getElementById("title");
+                    $title.innerText = `You are visiting from ${locationObject.city}, ${locationObject.state}, ${locationObject.country}`;
+
+                    map = L.map('map').setView([locationObject.latitude,locationObject.longitude],15)
+                    const marker = L.marker([0,0]).addTo(map);                        
+                    marker.setLatLng([locationObject.latitude,locationObject.longitude])
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright>OpenStreetMap</a> contributors',
+                        id: 'mapbox/streets-v11',
+                        }).addTo(map);
+                    })
+            });
+            
+            
+
+
+ /*            fetch('/location/api/ip')
             .then(response=>{return response.json()})
             .then(body => {
                 const $title = document.getElementById("title");
@@ -61,7 +99,7 @@
                     id: 'mapbox/streets-v11',
                     }).addTo(map);
                 })
-
+ */
         const reverseGeocoder = new BDCReverseGeocode();
 
         fetch('/location', {method: 'PUT'})
